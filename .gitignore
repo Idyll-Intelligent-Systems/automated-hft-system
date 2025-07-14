@@ -1,0 +1,139 @@
+# HFT Trading System - Git Ignore
+
+# Build artifacts
+build/
+dist/
+target/
+*.o
+*.so
+*.a
+*.exe
+*.dll
+*.dylib
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# C++
+*.obj
+*.pch
+*.pdb
+*.ilk
+*.idb
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# Rust
+Cargo.lock
+target/
+
+# IDEs and editors
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+log/
+
+# Data files (don't commit large datasets)
+data/historical/
+data/real_time/
+data/processed/
+*.csv
+*.parquet
+*.h5
+*.hdf5
+
+# Configuration secrets
+configs/secrets/
+*.key
+*.pem
+*.crt
+secrets.yml
+.secrets
+
+# Test outputs
+test-results/
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Documentation build
+docs/_build/
+docs/html/
+*.pdf
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.sass-cache/
+
+# Package files
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# MacOS
+*.dSYM/
+
+# Windows
+*.stackdump
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Runtime files
+*.pid
+*.sock
+
+# Monitoring data
+prometheus/data/
+grafana/data/
+elasticsearch/data/
+
+# Container volumes
+volumes/

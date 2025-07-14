@@ -1,0 +1,67 @@
+# Dockerignore for HFT Trading System
+
+# Build artifacts
+build/
+dist/
+*.o
+*.so
+*.a
+*.exe
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node.js (if any)
+node_modules/
+npm-debug.log*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Data files
+data/historical/
+data/real_time/
+*.csv
+*.parquet
+
+# Documentation build
+docs/_build/
+docs/html/
+
+# Test reports
+test-results/
+coverage/
+
+# Secrets
+*.key
+*.pem
+*.crt
+secrets/

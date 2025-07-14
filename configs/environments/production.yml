@@ -1,0 +1,154 @@
+# Production Configuration
+# High-Frequency Trading System - Production Environment
+
+system:
+  name: "hft-trading-system"
+  version: "1.0.0"
+  environment: "production"
+  log_level: "INFO"
+  
+  # Performance tuning
+  performance:
+    cpu_affinity: true
+    numa_optimization: true
+    huge_pages: true
+    kernel_bypass: true
+    
+network:
+  # Ultra-low latency targets
+  latency_target_us: 10
+  throughput_target_msg_per_sec: 1000000
+  
+  # Exchange connections
+  exchanges:
+    nasdaq:
+      host: "nasdaq.market.data"
+      port: 4000
+      protocol: "ITCH"
+      multicast_group: "233.54.12.111"
+      
+    cme:
+      host: "cme.market.data"
+      port: 9000
+      protocol: "MDP3"
+      multicast_group: "224.0.62.2"
+      
+    nyse:
+      host: "nyse.market.data"
+      port: 8000
+      protocol: "PILLAR"
+      
+  # Internal messaging
+  messaging:
+    zeromq:
+      market_data_port: 5555
+      order_port: 5556
+      risk_port: 5557
+      
+trading:
+  # Risk management
+  risk:
+    max_daily_loss: 1000000  # USD
+    max_position_size: 10000000  # USD
+    max_leverage: 5.0
+    pre_trade_checks: true
+    post_trade_monitoring: true
+    
+  # Position limits per symbol
+  position_limits:
+    default: 1000000  # USD
+    large_cap: 5000000  # USD
+    small_cap: 500000  # USD
+    
+  # Order management
+  orders:
+    max_orders_per_second: 10000
+    order_timeout_ms: 5000
+    cancel_on_disconnect: true
+    
+strategies:
+  market_making:
+    enabled: true
+    symbols: ["AAPL", "MSFT", "GOOGL", "TSLA", "AMZN"]
+    max_spread_bps: 10
+    inventory_limit: 1000
+    risk_multiplier: 1.0
+    
+  arbitrage:
+    enabled: true
+    min_profit_bps: 2
+    max_execution_time_ms: 100
+    
+  momentum:
+    enabled: false
+    lookback_periods: [5, 10, 20]
+    
+data:
+  # Market data configuration
+  feeds:
+    level1: true
+    level2: true
+    trades: true
+    imbalances: true
+    
+  # Storage
+  storage:
+    timeseries_db: "timescaledb://hft-db:5432/market_data"
+    cache: "redis://hft-cache:6379/0"
+    
+  # Data quality
+  quality:
+    validate_prices: true
+    outlier_detection: true
+    lateness_threshold_ms: 100
+    
+monitoring:
+  # Metrics collection
+  prometheus:
+    enabled: true
+    port: 9090
+    scrape_interval: "1s"
+    
+  # Alerting
+  alerts:
+    latency_threshold_us: 20
+    error_rate_threshold: 0.01
+    pnl_threshold: -100000
+    
+  # Logging
+  logging:
+    level: "INFO"
+    structured: true
+    stdout: false
+    file: "/var/log/hft/trading.log"
+    
+security:
+  # Authentication
+  auth:
+    method: "certificate"
+    cert_path: "/etc/ssl/certs/hft.crt"
+    key_path: "/etc/ssl/private/hft.key"
+    
+  # Encryption
+  encryption:
+    tls_version: "1.3"
+    cipher_suites: ["TLS_AES_256_GCM_SHA384"]
+    
+  # Access control
+  access:
+    admin_users: ["admin", "trader1", "trader2"]
+    readonly_users: ["analyst1", "analyst2"]
+    
+compliance:
+  # Regulatory reporting
+  reporting:
+    mifid2: true
+    best_execution: true
+    transaction_reporting: true
+    
+  # Audit
+  audit:
+    trade_logging: true
+    order_logging: true
+    risk_logging: true
+    retention_days: 2555  # 7 years

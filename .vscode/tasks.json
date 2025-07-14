@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build HFT System",
+			"type": "shell",
+			"command": "make",
+			"args": [
+				"build"
+			],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc",
+				"$tsc"
+			],
+			"isBackground": false
+		}
+	]
+}
