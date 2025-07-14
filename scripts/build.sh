@@ -11,6 +11,9 @@ BUILD_TYPE="${BUILD_TYPE:-Release}"
 NUM_CORES=$(nproc)
 VERBOSE="${VERBOSE:-0}"
 
+# Global targets array to store build targets parsed from command line
+TARGETS=()
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -234,7 +237,6 @@ parse_args() {
 
 # Main function
 main() {
-    local TARGETS=()
     parse_args "$@"
     
     log_info "Starting HFT system build..."
