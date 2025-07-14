@@ -1,0 +1,102 @@
+# Example HFT System Schema
+# This YAML file defines the system architecture for AI-driven code generation
+
+name: "lightning-hft"
+description: "Ultra-low latency HFT system with AI-driven optimization"
+
+components:
+  - networking
+  - market_data
+  - risk_engine
+  - order_execution
+  - strategy_engine
+  - monitoring
+
+tech_stack:
+  languages:
+    - "C++"
+    - "Python"
+    - "Rust"
+  
+  networking:
+    - "DPDK"
+    - "Solarflare"
+    - "FPGA"
+    - "Mellanox"
+  
+  middleware:
+    - "ZeroMQ"
+    - "Chronicle Queue"
+    - "Aeron"
+  
+  protocols:
+    - "FIX"
+    - "ITCH"
+    - "OUCH"
+    - "FAST"
+  
+  storage:
+    - "TimescaleDB"
+    - "Redis"
+    - "KDB+"
+  
+  ml:
+    - "scikit-learn"
+    - "xgboost"
+    - "tensorflow"
+    - "pytorch"
+    - "optuna"
+
+performance_targets:
+  latency_budget_ns: 500
+  throughput_target: 1000000
+  fill_rate_percent: 99.5
+  uptime_percent: 99.99
+
+risk_limits:
+  max_position_usd: 10000000
+  max_daily_loss: 1000000
+  max_leverage: 5.0
+  max_concentration_percent: 25.0
+  var_limit_usd: 500000
+
+exchanges:
+  - name: "NYSE"
+    protocols: ["FIX", "PILLAR"]
+    latency_target_us: 50
+  
+  - name: "NASDAQ"
+    protocols: ["ITCH", "OUCH"]
+    latency_target_us: 30
+  
+  - name: "CME"
+    protocols: ["FIX", "MDP3"]
+    latency_target_us: 100
+
+strategies:
+  market_making:
+    enabled: true
+    symbols: ["AAPL", "MSFT", "GOOGL", "TSLA"]
+    max_spread_bps: 10
+    inventory_limit: 1000
+  
+  arbitrage:
+    enabled: true
+    min_profit_bps: 2
+    max_execution_time_ms: 100
+  
+  momentum:
+    enabled: false
+    lookback_periods: [5, 10, 20]
+
+deployment:
+  target: "production"
+  colocation: "NY4"
+  redundancy: "active-passive"
+  monitoring: "24x7"
+
+compliance:
+  mifid2: true
+  best_execution: true
+  transaction_reporting: true
+  audit_retention_years: 7

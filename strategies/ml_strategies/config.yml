@@ -1,0 +1,218 @@
+# ML Strategies Configuration
+# ===========================
+
+# System-wide configuration for ML strategies
+system:
+  max_workers: 4
+  model_storage_path: "models/ml_strategies"
+  log_level: "INFO"
+  performance_monitoring_interval: 300  # seconds
+  health_check_interval: 60  # seconds
+  model_lifecycle_check_interval: 3600  # seconds
+
+# Default strategy configuration
+default_strategy:
+  max_position: 10000
+  max_daily_loss: 50000
+  max_leverage: 2.0
+  var_limit: 25000
+  max_drawdown: 0.15
+  concentration_limit: 0.3
+  stop_loss_pct: 0.05
+  
+  # Training parameters
+  retrain_hours: 6
+  max_training_samples: 10000
+  min_training_samples: 500
+  
+  # Prediction parameters
+  min_confidence_threshold: 0.6
+  prediction_horizon_seconds: 30
+  
+  # Risk management
+  risk_aversion: 0.1
+  max_participation_rate: 0.05
+  min_order_size: 100
+  max_order_size: 1000
+
+# Strategy-specific configurations
+strategies:
+  market_direction_v1:
+    symbols: ["AAPL", "GOOGL", "TSLA", "MSFT", "AMZN"]
+    model_type: "classification"
+    prediction_type: "market_direction"
+    
+    # Override default parameters
+    max_position: 15000
+    retrain_hours: 4
+    min_confidence_threshold: 0.65
+    
+    # Feature engineering parameters
+    feature_config:
+      lookback_periods: [5, 10, 20, 50, 100]
+      volatility_windows: [20, 50]
+      momentum_windows: [5, 10, 20]
+      enable_microstructure_features: true
+      enable_statistical_features: true
+      enable_technical_features: true
+      enable_time_features: true
+      enable_order_flow_features: true
+    
+    # Model parameters
+    model_config:
+      ensemble_methods: ["xgboost", "random_forest", "neural_network"]
+      xgboost:
+        n_estimators: 100
+        max_depth: 6
+        learning_rate: 0.1
+        random_state: 42
+      random_forest:
+        n_estimators: 100
+        max_depth: 10
+        random_state: 42
+      neural_network:
+        hidden_layers: [64, 32, 16]
+        dropout_rate: 0.2
+        epochs: 50
+        batch_size: 32
+    
+    # Execution parameters
+    execution_config:
+      algorithm: "auto"  # auto, avellaneda_stoikov, almgren_chriss, rl
+      participation_rate: 0.03
+      urgency_threshold: 0.8
+      slippage_tolerance: 0.001
+
+  # Additional strategy configurations can be added here
+  volatility_prediction_v1:
+    symbols: ["SPY", "QQQ", "IWM"]
+    model_type: "regression"
+    prediction_type: "volatility"
+    max_position: 5000
+    retrain_hours: 8
+    
+  mean_reversion_v1:
+    symbols: ["EURUSD", "GBPUSD", "USDJPY"]
+    model_type: "classification"
+    prediction_type: "mean_reversion"
+    max_position: 8000
+    retrain_hours: 12
+
+# Data processing configuration
+data_processing:
+  # Market data validation
+  validation:
+    max_spread_bps: 50  # Maximum spread in basis points
+    min_depth: 1000     # Minimum order book depth
+    max_price_change_pct: 10.0  # Maximum price change percentage
+    
+  # Data cleaning parameters
+  cleaning:
+    outlier_detection_method: "zscore"  # zscore, iqr, isolation_forest
+    outlier_threshold: 3.0
+    missing_value_strategy: "interpolate"  # drop, interpolate, forward_fill
+    
+  # Feature normalization
+  normalization:
+    method: "standard"  # standard, minmax, robust
+    feature_selection: true
+    selection_method: "mutual_info"  # mutual_info, f_score, correlation
+    max_features: 50
+
+# Model management
+model_management:
+  # Versioning
+  versioning:
+    enable: true
+    max_versions_per_strategy: 10
+    auto_cleanup: true
+    
+  # Performance thresholds for model updates
+  performance_thresholds:
+    min_accuracy: 0.45
+    min_sharpe_ratio: 0.3
+    max_drawdown_threshold: -0.20
+    
+  # Ensemble configuration
+  ensemble:
+    enable: true
+    voting_method: "weighted"  # majority, weighted, stacking
+    confidence_weighting: true
+    performance_weighting: true
+
+# Risk management
+risk_management:
+  # Position limits
+  position_limits:
+    max_total_exposure: 100000
+    max_single_symbol_exposure: 20000
+    max_sector_exposure: 50000
+    
+  # Risk metrics monitoring
+  risk_monitoring:
+    var_confidence_level: 0.95
+    var_lookback_days: 252
+    stress_test_scenarios: ["market_crash", "volatility_spike", "liquidity_crisis"]
+    
+  # Circuit breakers
+  circuit_breakers:
+    enable: true
+    daily_loss_limit: 25000
+    drawdown_limit: 0.10
+    position_limit_multiplier: 1.5
+
+# Performance monitoring
+performance_monitoring:
+  # Metrics to track
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "sharpe_ratio"
+    - "sortino_ratio"
+    - "max_drawdown"
+    - "total_return"
+    - "win_rate"
+    - "profit_factor"
+    
+  # Reporting
+  reporting:
+    enable_real_time_dashboard: true
+    daily_report: true
+    weekly_report: true
+    monthly_report: true
+    
+  # Alerts
+  alerts:
+    enable: true
+    accuracy_threshold: 0.4
+    drawdown_threshold: 0.08
+    return_threshold: -0.05
+    
+# Integration settings
+integration:
+  # Data feeds
+  data_feeds:
+    primary: "polygon"
+    backup: "alpha_vantage"
+    websocket_buffer_size: 10000
+    
+  # Order management
+  order_management:
+    enable_paper_trading: true
+    enable_live_trading: false
+    order_timeout_seconds: 30
+    
+  # Database
+  database:
+    type: "postgresql"  # postgresql, mongodb, sqlite
+    connection_string: "postgresql://user:pass@localhost:5432/hft_ml"
+    
+  # Logging
+  logging:
+    level: "INFO"
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    file_path: "logs/ml_strategies.log"
+    max_file_size_mb: 100
+    backup_count: 5
